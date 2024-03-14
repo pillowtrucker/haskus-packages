@@ -2,7 +2,6 @@ dist
 *.swp
 *.out
 *.log
-*.lock
 *.aux
 *.toc
 *.pdf
@@ -13,3 +12,4 @@ dist
 cabal.sandbox.config
 .cabal-sandbox
 .stack-work
+.direnv
