@@ -58,13 +58,13 @@ instance IndexableBits Word where
    popCount (W# x#) = W# (popCnt# x#)
 
 instance IndexableBits Word8 where
-   popCount (W8# x#) = W# (popCnt8# x#)
+   popCount (W8# x#) = W# (popCnt8# (word8ToWord# x#))
 
 instance IndexableBits Word16 where
-   popCount (W16# x#) = W# (popCnt16# x#)
+   popCount (W16# x#) = W# (popCnt16# (word16ToWord# x#))
 
 instance IndexableBits Word32 where
-   popCount (W32# x#) = W# (popCnt32# x#)
+   popCount (W32# x#) = W# (popCnt32# (word32ToWord# x#))
 
 instance IndexableBits Word64 where
    popCount (W64# x#) = W# (popCnt64# x#)
@@ -73,16 +73,16 @@ instance IndexableBits Int where
    popCount (I# x#) = W# (popCnt# (int2Word# x#))
 
 instance IndexableBits Int8 where
-   popCount (I8# x#) = W# (popCnt8# (int2Word# x#))
+   popCount (I8# x#) = W# (popCnt8# (int2Word# (int8ToInt# x#)))
 
 instance IndexableBits Int16 where
-   popCount (I16# x#) = W# (popCnt16# (int2Word# x#))
+   popCount (I16# x#) = W# (popCnt16# (int2Word# (int16ToInt# x#)))
 
 instance IndexableBits Int32 where
-   popCount (I32# x#) = W# (popCnt32# (int2Word# x#))
+   popCount (I32# x#) = W# (popCnt32# (int2Word# (int32ToInt# x#)))
 
 instance IndexableBits Int64 where
-   popCount (I64# x#) = W# (popCnt64# (int2Word# x#))
+   popCount (I64# x#) = W# (popCnt64# (int64ToWord64# x#))
 
 instance IndexableBits Integer where
    -- we don't have access to Integer primitive (we would have to conditionally
