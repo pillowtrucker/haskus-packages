@@ -22,6 +22,7 @@
 -- | A buffer in memory
 module Haskus.Memory.Buffer where
 
+
 import Haskus.Number.Word
 import Haskus.Number.Int
 import Haskus.Binary.Storable
@@ -161,12 +162,15 @@ getFinalizers = \case
 addFinalizer :: Buffer -> IO () -> IO ()
 addFinalizer b f = do
    let !fin = getFinalizers b
-   wasEmpty <- insertFinalizer fin f
-   -- add the weak reference to the finalizer IORef (not to Addr#/byteArray#/...)
-   when wasEmpty $ IO \s ->
-    case mkWeak# fin b (unIO $ runFinalizers fin) s of
-      (# s1, _wk #) -> (# s1, () #)
-
+   case fin of
+     Finalizers rfs -> do
+       wasEmpty <- insertFinalizer fin f
+     -- add the weak reference to the finalizer IORef (not to Addr#/byteArray#/...)
+       when wasEmpty $ IO \s ->
+         case mkWeak# (IORef (STRef rfs)) b (unIO $ runFinalizers fin) s of
+           (# s1, _wk #) -> (# s1, () #)
+     NoFinalizers -> error "nonsense"
+     
 -- | Internal function used to execute finalizers
 runFinalizers :: Finalizers# RealWorld -> IO ()
 runFinalizers  = \case
