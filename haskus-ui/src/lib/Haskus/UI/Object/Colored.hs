@@ -22,8 +22,10 @@ import Haskus.UI.Common
 -- | Add default color to inner object
 data ColoredF e = ColoredF Color e deriving (Functor)
 
-eadtPattern 'ColoredF "Colored"
-
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+--eadtPattern 'ColoredF "Colored"
+pattern Colored c o = VF (ColoredF c o)
 instance Object e => Object (ColoredF e) where
    hit r (ColoredF c o) = hit r o ||> (\x -> x { hitColor = Just c })
 

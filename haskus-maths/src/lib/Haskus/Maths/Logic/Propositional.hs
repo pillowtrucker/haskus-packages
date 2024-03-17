@@ -80,14 +80,23 @@ showF e = bottomUp (toBottomUp @ShowFormula showF') e
 
 eadtPattern 'FalseF "Fals"
 eadtPattern 'TrueF  "Tru"
-eadtPattern 'AtomF  "Atom"
-eadtPattern 'NotF   "Not"
-eadtPattern 'AndF   "And"
-eadtPattern 'OrF    "Or"
-eadtPattern 'XorF   "Xor"
-eadtPattern 'ImpF   "Imp"
-eadtPattern 'IffF   "Iff"
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- eadtPattern 'AtomF  "Atom"
+pattern Atom a = VF (AtomF a)
+-- eadtPattern 'NotF   "Not"
+pattern Not n = VF (NotF n)
+-- eadtPattern 'AndF   "And"
+pattern And a o = VF (AndF a o)
 
+-- eadtPattern 'OrF    "Or"
+pattern Or s o = VF (OrF s o)
+-- eadtPattern 'XorF   "Xor"
+pattern Xor s o = VF (XorF s o)
+-- eadtPattern 'ImpF   "Imp"
+pattern Imp s o= VF (ImpF s o)
+-- eadtPattern 'IffF   "Iff"
+pattern Iff s o = VF (IffF s o)
 class Atoms a f where
    atoms' :: f (Set a) -> Set a
 

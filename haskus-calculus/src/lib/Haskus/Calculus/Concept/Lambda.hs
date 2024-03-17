@@ -26,8 +26,10 @@ import Data.Set as Set
 -- | Abstraction
 data LambdaF n e = LambdaF n e deriving (Functor)
 
-$(eadtPattern 'LambdaF "Lambda")
-
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- $(eadtPattern 'LambdaF "Lambda")
+pattern Lambda n e = VF (LambdaF n e)
 instance Show n => PrettyPrintF (LambdaF n) where
    prettyPrintF (LambdaF n (b,e)) = (True,"\\"++show n++"."++withParen b e)
 

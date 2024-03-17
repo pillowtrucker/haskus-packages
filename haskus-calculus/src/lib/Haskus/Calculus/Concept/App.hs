@@ -22,8 +22,11 @@ import Data.Set as Set
 
 -- | Application
 data AppF e = AppF e e deriving (Functor)
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- $(eadtPattern 'AppF "App")
+pattern App e o = VF (AppF e o)
 
-$(eadtPattern 'AppF "App")
 
 instance PrettyPrintF AppF where
    prettyPrintF (AppF (b1,e1) (b2,e2)) = (True,withParen b1 e1 ++ " "++ withParen b2 e2)

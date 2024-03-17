@@ -26,10 +26,12 @@ data LiteralF e
    = LitIntF Integer
    | LitStringF String
    deriving (Functor)
-
-$(eadtPattern 'LitIntF    "LitInt")
-$(eadtPattern 'LitStringF "LitString")
-
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- $(eadtPattern 'LitIntF    "LitInt")
+pattern LitInt i = VF (LitIntF i)
+-- $(eadtPattern 'LitStringF "LitString")
+pattern LitString s = VF (LitStringF s)
 instance PrettyPrintF LiteralF where
    prettyPrintF (LitIntF n)    = (False,show n)
    prettyPrintF (LitStringF n) = (False,show n)

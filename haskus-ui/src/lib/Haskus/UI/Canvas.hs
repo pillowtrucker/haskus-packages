@@ -135,4 +135,7 @@ instance (Ord n) => Object (CanvasF Dist Color n e) where
          }
       
 data CanvasF d c n e = CanvasF (SceneGraph d c n) deriving (Show,Functor)
-eadtPattern 'CanvasF "Canvas"
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- eadtPattern 'CanvasF "Canvas"
+pattern Canvas c = VF (CanvasF c)

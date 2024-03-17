@@ -24,9 +24,10 @@ import Data.Set as Set
 
 -- | Variable
 data VarF n e = VarF n deriving (Functor)
-
-$(eadtPattern 'VarF "Var")
-
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- $(eadtPattern 'VarF "Var")
+pattern Var n = VF (VarF n)
 instance Show n => PrettyPrintF (VarF n) where
    prettyPrintF (VarF n) = (False,show n)
 

@@ -27,8 +27,10 @@ data SphereF e = SphereF
    }
    deriving (Show)
 
-eadtPattern 'SphereF "Sphere"
-
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- eadtPattern 'SphereF "Sphere"
+pattern Sphere s o = VF (SphereF s o)
 instance Object (SphereF e) where
    hit Ray{..} SphereF{..} =
       let

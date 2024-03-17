@@ -25,8 +25,10 @@ data PlaneF e = PlaneF
    , planeNormal :: Normal  -- ^ Normal of the plane
    }
    deriving (Show,Functor)
-
-eadtPattern 'PlaneF "Plane"
+-- https://gitlab.haskell.org/ghc/ghc/-/issues/18806
+-- https://github.com/haskus/haskus-manual/blob/master/source/eadt/basics.rst
+-- eadtPattern 'PlaneF "Plane"
+pattern Plane p o = VF (PlaneF p o)
 
 instance Object (PlaneF e) where
    hit Ray{..} PlaneF{..} =
